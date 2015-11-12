@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../lib/praise.js');
+var schema = require('../lib/data-schema.js');
 
 
 router.post('/memories', function(req, res){
@@ -15,32 +16,29 @@ router.post('/memories', function(req, res){
 
 router.get('/memories', function(req, res){
   db.selectAll('memories').then(function(memories){
-    var schema = require('../lib/data-schema.js');
-    memories.forEach(function(memory){
-      schema.data.push({
-          "type": "memory",
-          "id": memory.id,
-          "attributes": {
-            "old_days": memory.old_days,
-            "these_days": memory.these_days,
-            "year": memory.year
-          },
-          "links": {}
-      })
-    })
-    res.json(schema).status(200).end()
+    res.json(shema.formatRes(memories)).status(200).end()
   })
 })
 
 router.get('/memories/years', function(req, res){
   db.selectDistinct('memories', 'year').then(function(years){
-    var schema = require('../lib/data-schema.js');
-    years.forEach(function(year){
-      schema.data.push(year.year)
-    })
-    res.json(schema).status(200).end();
+    res.json(schema.formatYears(years)).status(200).end();
   })
 })
+
+router.get('/memories/year/:year', function(req, res){
+  db.select('memories', { year: req.params.year }).then(function(memories){
+    res.json(schema.formatRes(memories)).status(200).end()
+  })
+})
+
+router.get('/delete-all', function(req, res){
+  db.deleteAll('memories').then(function(){
+    res.send(200).end()
+  })
+})
+
+
 
 
 
