@@ -16,7 +16,7 @@ router.post('/memories', function(req, res){
 
 router.get('/memories', function(req, res){
   db.selectAll('memories').then(function(memories){
-    res.json(shema.formatRes(memories)).status(200).end()
+    res.json(schema.formatRes(memories)).status(200).end()
   })
 })
 
