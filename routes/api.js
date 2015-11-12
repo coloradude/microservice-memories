@@ -32,4 +32,34 @@ router.get('/memories', function(req, res){
   })
 })
 
+router.get('/memories/years', function(req, res){
+  db.selectDistinct('memories', 'year').then(function(years){
+    var schema = require('../lib/data-schema.js');
+    years.forEach(function(year){
+      schema.data.push(year.year)
+    })
+    res.json(schema).status(200).end();
+  })
+})
+
+
+
+
+
+
+
+
+
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
