@@ -7,8 +7,8 @@ router.post('/memories', function(req, res){
     old_days: req.body.data.attributes.old_days, 
     these_days: req.body.data.attributes.these_days, 
     year: req.body.data.attributes.year
-  }).then(function(res){
-    console.log(res)
+  }).then(function(result){
+    console.log(result)
     res.status(200).end()
   })
 })
