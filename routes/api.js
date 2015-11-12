@@ -26,7 +26,7 @@ router.get('/memories/years', function(req, res){
   })
 })
 
-router.get('/memories/year/:year', function(req, res){
+router.get('/memories/:year', function(req, res){
   db.select('memories', { year: req.params.year }).then(function(memories){
     res.json(schema.formatRes(memories)).status(200).end()
   })
